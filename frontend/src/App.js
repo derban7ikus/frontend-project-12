@@ -1,7 +1,18 @@
 import logo from './logo.svg';
 import './App.css';
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from './context';
+import React from 'react';
 
 function App() {
+  const isAuthorized = localStorage.getItem('user') ? true : false;
+  const navigate = useNavigate();
+  React.useEffect(() => {
+    if (!isAuthorized) {
+      navigate('/login');
+    }
+  })
+
   return (
     <div className="App">
       <header className="App-header">
