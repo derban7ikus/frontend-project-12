@@ -7,14 +7,15 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-svg {
-  height: 150px;
-  width: 150px;
-}
+
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+ul {
+  list-style: none;
 }
 
 root {
@@ -1991,7 +1992,8 @@ progress {
   padding-left: var(--bs-gutter-x, .75rem);
   padding-right: .75rem;
   padding-right: var(--bs-gutter-x, .75rem);
-  width: 100%
+  width: 100%;
+  height: auto
 }
 
 @media(min-width:576px) {
@@ -9121,7 +9123,7 @@ fieldset:disabled .btn {
 }
 
 .w-100 {
-  width: 100% !important
+  width: 100%
 }
 
 .w-auto {
