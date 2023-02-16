@@ -22,8 +22,8 @@ const NewMessage = ({ channel }) => {
       };
       try {
         await socketApi.sendMessage(message);
-        console.log(message);
         f.resetForm();
+        console.log(user);
       } catch (err) {
         console.log(err);
       }

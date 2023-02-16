@@ -21,6 +21,7 @@ const SignUpForm = () => {
         .post("/api/v1/login", values)
         .then((response) => {
           auth.logIn(response.data);
+          console.log(auth.user);
         })
         .then(() => navigate("/"))
         .catch((err) => {
