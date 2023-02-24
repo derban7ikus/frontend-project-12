@@ -5,6 +5,7 @@ import { Formik, Field } from "formik";
 import { socketApi } from "../index.jsx";
 import useAuth from "../hooks/useAuth.js";
 import { useTranslation } from "react-i18next";
+import leoProfanity from "leo-profanity";
 
 const NewMessage = ({ channel }) => {
   const { t } = useTranslation();
@@ -21,8 +22,10 @@ const NewMessage = ({ channel }) => {
     <Formik
       initialValues={{ body: "" }}
       onSubmit={async ({ body }, { resetForm, setSubmitting }) => {
+        leoProfanity.loadDictionary("ru");
+        const profanityChecked = leoProfanity.clean(body);
         const message = {
-          body,
+          body: profanityChecked,
           channelId: channel.id,
           username: user,
         };
