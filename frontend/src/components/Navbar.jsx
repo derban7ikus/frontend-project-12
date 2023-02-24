@@ -1,14 +1,16 @@
 import useAuth from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const Navbar = () => {
+  const { t } = useTranslation();
   const auth = useAuth();
   const navigate = useNavigate();
   return (
     <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
       <div className="container">
         <a className="navbar-brand" href="/">
-          Hexlet Chat
+          {t("navbar.title")}
         </a>
         {auth.user ? (
           <button
@@ -19,7 +21,7 @@ const Navbar = () => {
               navigate("/");
             }}
           >
-            Выйти
+            {t("navbar.exitButton")}
           </button>
         ) : null}
       </div>

@@ -5,8 +5,10 @@ import { PlusSquare } from "react-bootstrap-icons";
 import { ModalHeader, ModalTitle } from "react-bootstrap";
 import { useFormik } from "formik";
 import { socketApi } from "../index.jsx";
+import { useTranslation } from "react-i18next";
 
 const AddChannelModal = (channelsNames) => {
+  const { t } = useTranslation();
   const [show, setShow] = useState(false);
 
   const handleOpen = () => {
@@ -53,7 +55,7 @@ const AddChannelModal = (channelsNames) => {
       </Button>
       <Modal show={show} onHide={handleClose}>
         <ModalHeader closeButton>
-          <ModalTitle>Добавить канал</ModalTitle>
+          <ModalTitle>{t("modal.addChannel")}</ModalTitle>
         </ModalHeader>
         <Modal.Body>
           <Form onSubmit={f.handleSubmit}>
@@ -71,10 +73,10 @@ const AddChannelModal = (channelsNames) => {
         </Modal.Body>
         <Modal.Footer>
           <Button onCLick={handleClose} className="secondary">
-            Отменить
+            {t("modal.cancelButton")}
           </Button>
           <Button onClick={f.handleSubmit} className="primary">
-            Отправить
+            {t("modal.submitButton")}
           </Button>
         </Modal.Footer>
       </Modal>
@@ -83,6 +85,7 @@ const AddChannelModal = (channelsNames) => {
 };
 
 const DropdownModals = ({ channelId }) => {
+  const { t } = useTranslation();
   const [showDelete, setShowDelete] = useState(false);
   const [showRename, setShowRename] = useState(false);
 
@@ -121,18 +124,18 @@ const DropdownModals = ({ channelId }) => {
     <>
       <Dropdown.Menu>
         <Dropdown.Item as="button" onClick={handleOpenDelete}>
-          Удалить
+          {t("modal.deleteButton")}
         </Dropdown.Item>
         <Modal show={showDelete} onHide={handleCloseDelete}>
           <ModalHeader closeButton>
-            <ModalTitle>Удалить канал</ModalTitle>
+            <ModalTitle>{t("modal.deleteChannel")}</ModalTitle>
           </ModalHeader>
           <Modal.Body>
-            <p className="lead">Уверены?</p>
+            <p className="lead">{t("modal.confirmation")}</p>
           </Modal.Body>
           <Modal.Footer>
             <Button onCLick={handleCloseDelete} className="btn-secondary">
-              Отменить
+              {t("modal.cancelButton")}
             </Button>
             <Button
               onClick={() => {
@@ -141,14 +144,14 @@ const DropdownModals = ({ channelId }) => {
               }}
               className="btn-danger"
             >
-              Удалить
+              {t("modal.deleteButton")}
             </Button>
           </Modal.Footer>
         </Modal>
         <Dropdown.Item onClick={handleOpenRename}>Переименовать</Dropdown.Item>
         <Modal show={showRename} onHide={handleCloseRename}>
           <ModalHeader closeButton>
-            <ModalTitle>Переименовать канал</ModalTitle>
+            <ModalTitle>{t("modal.renameChannel")}</ModalTitle>
           </ModalHeader>
           <Modal.Body>
             <Form onSubmit={f.handleSubmit}>
@@ -165,10 +168,10 @@ const DropdownModals = ({ channelId }) => {
           </Modal.Body>
           <Modal.Footer>
             <Button onCLick={handleCloseRename} className="secondary">
-              Отменить
+              {t("modal.cancelButton")}
             </Button>
             <Button onClick={f.handleSubmit} className="primary">
-              Отправить
+              {t("modal.submitButton")}
             </Button>
           </Modal.Footer>
         </Modal>

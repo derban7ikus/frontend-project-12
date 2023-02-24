@@ -2,48 +2,50 @@ import { Formik, useField, ErrorMessage, Form } from "formik";
 import login from "../login.jfif";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import useAuth from "../hooks/useAuth.js";
 import { object, string, ref } from "yup";
-
-const InputValidation = object().shape({
-  name: string()
-    .min(3, "От 3 до 20 символов")
-    .max(20, "От 3 до 20 симоволов")
-    .required("Обязательное поле"),
-  password: string()
-    .min(6, "Не менее 6 символов")
-    .required("Обязательное поле"),
-  confirmPassword: string()
-    .required("Подтвердите пароль")
-    .oneOf([ref("password")], "Пароли должны совпадать"),
-});
-
-const Input = ({ name, label, ...props }) => {
-  const [field, meta] = useField(name);
-  return (
-    <div className="form-floating mb-3">
-      <input
-        className={`form-control ${
-          meta.error && meta.touched ? "is-invalid" : ""
-        }`}
-        {...field}
-        {...props}
-      />
-      <label className="form-label" htmlFor={field.name}>
-        {label}
-      </label>
-      <ErrorMessage
-        className="invalid-tooltip"
-        name={field.name}
-        component="div"
-      />
-    </div>
-  );
-};
+import { useTranslation } from "react-i18next";
 
 const RegistrationForm = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
+  const InputValidation = object().shape({
+    name: string()
+      .min(3, t("errors.nameLengthError"))
+      .max(20, t("errors.nameLengthError"))
+      .required(t("errors.requiredField")),
+    password: string()
+      .min(6, t("errors.passwordLengthError"))
+      .required(t("errors.requiredField")),
+    confirmPassword: string()
+      .required(t("errors.confirmPasswordRequired"))
+      .oneOf([ref("password")], t("errors.confirmPasswordFail")),
+  });
+
+  const Input = ({ name, label, ...props }) => {
+    const [field, meta, helpers] = useField(name);
+    const { handleBlur } = helpers;
+    return (
+      <div className="form-floating mb-3">
+        <input
+          className={`form-control ${
+            meta.error && meta.touched ? "is-invalid" : ""
+          }`}
+          {...field}
+          {...props}
+          onBlur={handleBlur}
+          placeholder={label}
+        />
+        <label className="form-label" htmlFor={field.name}>
+          {label}
+        </label>
+        <ErrorMessage
+          className="invalid-tooltip"
+          name={field.name}
+          component="div"
+        />
+      </div>
+    );
+  };
   const handleSubmit = async ({ name, password }) => {
     try {
       await axios
@@ -66,7 +68,7 @@ const RegistrationForm = () => {
           <div className="card shadow-sm">
             <div className="card-body row p-5">
               <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
-                <img src={login} alt="Войти"></img>
+                <img src={login} alt={t("registrationPage.title")}></img>
               </div>
               <Formik
                 initialValues={{ name: "", password: "", confirmPassword: "" }}
@@ -76,12 +78,18 @@ const RegistrationForm = () => {
                 {() => {
                   return (
                     <Form className="w-50">
-                      <h1 className="text-center mb-4">Регистрация</h1>
-                      <Input name="name" label="Имя пользователя" />
-                      <Input name="password" label="Пароль" type="password" />
+                      <h1 className="text-center mb-4">
+                        {t("registrationPage.title")}
+                      </h1>
+                      <Input name="name" label={t("registrationPage.name")} />
+                      <Input
+                        name="password"
+                        label={t("registrationPage.password")}
+                        type="password"
+                      />
                       <Input
                         name="confirmPassword"
-                        label="Подтвердите пароль"
+                        label={t("registrationPage.confirmPassword")}
                         type="password"
                       />
                       <button
@@ -90,7 +98,7 @@ const RegistrationForm = () => {
                         data-form-type="action,login"
                         data-kwimpalastatus="dead"
                       >
-                        Зарегистрироваться
+                        {t("registrationPage.button")}
                       </button>
                     </Form>
                   );
