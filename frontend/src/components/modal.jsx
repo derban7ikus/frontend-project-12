@@ -6,6 +6,7 @@ import { ModalHeader, ModalTitle } from "react-bootstrap";
 import { useFormik } from "formik";
 import { socketApi } from "../index.jsx";
 import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
 
 const AddChannelModal = (channelsNames) => {
   const { t } = useTranslation();
@@ -34,6 +35,7 @@ const AddChannelModal = (channelsNames) => {
         await socketApi.addChannel(channel);
         f.resetForm();
         handleClose();
+        toast(t("toastify.addChannel"));
       } catch (err) {
         console.log(err);
       }
@@ -114,8 +116,10 @@ const DropdownModals = ({ channelId }) => {
         console.log("rename", channel);
         f.resetForm();
         handleCloseRename();
+        toast(t("toastify.renameChannel"));
       } catch (err) {
         console.log(err);
+        toast(t("toastify.unknownError"));
       }
     },
   });
@@ -141,6 +145,7 @@ const DropdownModals = ({ channelId }) => {
               onClick={() => {
                 socketApi.removeChannel({ id: channelId });
                 handleCloseDelete();
+                toast(t("toastify.removeChannel"));
               }}
               className="btn-danger"
             >

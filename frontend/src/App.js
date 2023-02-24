@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import AuthContext from './context/index.js';
 import useAuth from "./hooks/useAuth.js";
 import React, { useState } from 'react';
@@ -7,6 +8,8 @@ import Main from "./components/Main.jsx";
 import Login from "./components/Login.jsx";
 import ErrorPage from './components/error-page.jsx';
 import RegistrationForm from "./components/Registration.jsx";
+
+import 'react-toastify/dist/ReactToastify.css';
 
 const AuthContextProvider = ({ children }) => {
   const authData = JSON.parse(localStorage.getItem('user'));
@@ -54,6 +57,7 @@ function App() {
             <Route path='/signup' element={<RegistrationForm />} />
           </Routes>
         </div>
+        <ToastContainer />
       </BrowserRouter>
     </AuthContextProvider>
   );

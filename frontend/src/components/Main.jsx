@@ -9,6 +9,7 @@ import { getCurrentChannel, getChannelsNames } from "../selectors.js";
 import { DropdownModals, AddChannelModal } from "./modal.jsx";
 import { socketApi } from "../index.jsx";
 import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
 
 const Channel = ({ name, isCurrent, id, isRemovable }) => {
   const { t } = useTranslation();
@@ -79,7 +80,10 @@ const Main = () => {
         .get("/api/v1/data", {
           headers: auth.getAuthHeader(),
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          toast(t("toastify.networkError"));
+          console.log(error);
+        });
       dispatch(actions.createInitialState(res.data));
     };
     fetchData();

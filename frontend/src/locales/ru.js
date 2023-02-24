@@ -20,6 +20,13 @@ const resources = {
       message: 'Нет аккаунта?',
       registrationLink: 'Регистрация',
     },
+    toastify: {
+      addChannel: 'Канал создан',
+      removeChannel: 'Канал удален',
+      renameChannel: 'Канал переименован',
+      fetchError: 'Ошибка соединения',
+      unknownError: 'Неизвестная ошиибка',
+    },
     registrationPage: {
       title: 'Регистрация',
       name: 'Имя пользователя',
